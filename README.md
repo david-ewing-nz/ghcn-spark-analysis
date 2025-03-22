@@ -11,7 +11,7 @@ The full workflow is run in a distributed environment using a cloud-based Spark 
 
 ---
 
-## 📁 Repository Structure (created with ChatGPT to same time)
+## 📁 Repository Structure (readme.md created with ChatGPT)
 
 ```bash
 ghcn-spark-analysis/
