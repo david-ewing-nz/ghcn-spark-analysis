@@ -1,1 +1,2 @@
-# ghcn-spark-analysis
+
+<pre lang="markdown"><code>```bash ghcn-spark-analysis/ │ ├── .gitignore ├── README.md ├── environment.yml # Optional if using conda │ ├── notebooks/ # Main driver notebooks │ └── 01_exploration.ipynb │ ├── scripts/ # Python helpers (schema loading, joining, etc.) │ └── enrich_stations.py │ ├── data/ │ ├── sample/ # Tiny CSVs or JSONs for local testing │ ├── processed/ # Visualisation-ready exports from Spark │ └── raw/ # Local copy of GHCN samples (if allowed) │ ├── output/ │ ├── figures/ │ ├── tables/ │ └── results/ │ └── report/ ├── DATA420_Report.pdf └── supplementary_material.zip ``` </code></pre>
