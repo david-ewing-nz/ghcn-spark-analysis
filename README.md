@@ -1,12 +1,13 @@
 # 🌍 GHCN Spark Analysis (DATA420 Assignment 1)
 
-This repository contains my submission for **DATA420 Assignment 1** at the University of Canterbury. The project involves distributed data processing and analysis of the **Global Historical Climatology Network (GHCN)** dataset using **Apache Spark**.
+This is my submission for **DATA420 Assignment 1** . 
+The project involves distributed data processing and analysis of the **Global Historical Climatology Network (GHCN)** dataset using **Apache Spark**.
 
 ---
 
 ## 🧠 Project Overview
 
-The goal of this assignment is to explore, process, analyse, and visualise global climate data using PySpark. The full workflow is run in a distributed environment using a cloud-based Spark notebook environment provided by UC, with outputs exported for local analysis and visualisation.
+The full workflow is run in a distributed environment using a cloud-based Spark notebook environment provided by James William, with outputs exported for local analysis and visualisation.
 
 ---
 
