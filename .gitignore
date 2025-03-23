@@ -1,0 +1,49 @@
+# ---------------------------
+# Python
+# ---------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv/
+venv/
+env/
+
+# ---------------------------
+# Jupyter Notebooks
+# ---------------------------
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+output.txt
+*.out
+*.log
+
+# ---------------------------
+# VS Code Settings
+# ---------------------------
+.vscode/
+*.code-workspace
+
+# ---------------------------
+# OS-specific
+# ---------------------------
+.DS_Store
+Thumbs.db
+
+# ---------------------------
+# Spark & Hadoop Outputs
+# ---------------------------
+*.crc
+*.tmp
+_part*
+_SUCCESS
+FAILURE
+spark-warehouse/
+.metastore_db
