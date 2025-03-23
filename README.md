@@ -45,6 +45,8 @@ ghcn-spark-analysis/
 │   ├── tables/                # CSV summaries or aggregations
 │   └── results/               # Misc. output files
 │
-└── report/
-    ├── DATA420_Report.pdf
-    └── supplementary_material.zip
+├── report/
+│   ├── DATA420_Report.pdf
+│   └── supplementary_material.zip
+│
+└── doc/
