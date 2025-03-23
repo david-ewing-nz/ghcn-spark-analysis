@@ -1,3 +1,17 @@
+# CREATED WITH THE HELP OF GITHUB 
+# LaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.lof
+*.lot
+
 # ---------------------------
 # Python
 # ---------------------------
