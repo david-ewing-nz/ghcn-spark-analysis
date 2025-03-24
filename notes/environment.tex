@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Breakdown of \texttt{Connect-Kubernetes} Execution Environment}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Overview}
+
+This document outlines the relationship between the operating systems, execution layers, and components involved when using the \texttt{Connect-Kubernetes} command within the DATA420-25S1 environment.
+
+\section*{Component Breakdown}
+
+\begin{longtable}{@{}lll@{}}
+\toprule
+\textbf{Component} & \textbf{OS / Layer} & \textbf{Notes} \\
+\midrule
+PowerShell & Windows (MADS Desktop) & You launch it directly \\
+\texttt{Connect-Kubernetes} & PowerShell script & Talks to Kubernetes API \\
+Kubernetes Cluster & Linux-based (cloud backend) & Where your Jupyter container runs \\
+Jupyter container & Linux (e.g., Ubuntu) & Where Spark/Python executes \\
+\bottomrule
+\end{longtable}
+
+\section*{Explanation}
+
+The \texttt{Connect-Kubernetes} command is executed within the Windows-based MADS Desktop using PowerShell. This command acts as a client interface to the cloud-hosted Kubernetes cluster. Although the command runs locally on Windows, it connects to a backend system where containers are orchestrated on a Linux-based Kubernetes environment.
+
+The actual Spark and Python computations are carried out within a Linux container, which is started and managed via Kubernetes once \texttt{Start-Jupyter} is called.
+
+\end{document}
