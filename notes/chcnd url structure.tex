@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{array}
+\setmonofont{Consolas}
+
+% Define a column type with raggedright and no hyphenation
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{document}
+
+\section*{Azure Blob Storage URL Structure}
+
+This paragraph is fully hyphenated and should wrap naturally across lines without restriction.
+
+\noindent\texttt{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2024.csv.gz}
+
+\bigskip
+
+\noindent
+\begin{tabular}{@{}L{0.35\textwidth} L{0.12\textwidth} L{0.50\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\texttt{wasbs://} & Protocol & Azure Blob Storage over SSL (used with Hadoop-compatible connectors) \\
+\texttt{campus-data} & Container & Like a top-level directory within the blob storage account \\
+\texttt{madsstorage002} & Storage account & The Azure storage account name \\
+\texttt{blob.core.windows.net} & Service domain & Azure’s blob service endpoint domain \\
+\texttt{/ghcnd/daily/2024.csv.gz} & Path & Virtual directory and file structure within the container \\
+\texttt{ghcnd} & Container name & \texttt{<container>} \\
+\texttt{daily} & Optional folder(s) within container & \texttt{<directory>}\\
+\texttt{2024.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+This paragraph is also hyphenated like any normal LaTeX text. For example, hyphenation is useful when lines are justified.
+
+\end{document}
