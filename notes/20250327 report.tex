@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[useregional]{datetime2}
+\usepackage{appendix}
+
+\setmonofont{Consolas}
+\renewcommand{\familydefault}{\sfdefault} % use sans-serif throughout
+
+% Define custom column type for ragged-right fixed width columns
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% Define custom date style
+\DTMnewdatestyle{yyyymmdddots}{
+  \renewcommand{\DTMdisplaydate}[4]{\DTMtwodigits{##1}.\DTMtwodigits{##2}.\DTMtwodigits{##3}}%
+  \renewcommand{\DTMdisplaytime}[2]{\DTMtwodigits{##1}:\DTMtwodigits{##2}}%
+}
+\DTMsetdatestyle{yyyymmdddots}
+
+% Save today's date
+\AtBeginDocument{
+  \DTMsavedate{today}{\today}
+}
+
+% Timestamp using saved date + current time
+\newcommand{\nowdatetime}{%
+  \DTMnow%
+  \DTMuseDate{today}~\DTMusecurrenttime%
+}
+
+% Title macro with titlepage environment
+\newcommand{\nowmaketitle}{
+  \begin{center}
+    \centering
+    \vspace*{2cm}
+    {\Large\textbf{DATA420-25S1(C)}\par}
+    \vspace{0.5cm}
+    {\large\textbf{ASSIGNMENT 1}\par}
+    \vspace{4cm}
+    {\Huge\textbf{GHCN Data Analysis using Spark}\par}
+    \vfill
+    {\large David Ewing (82171165)\par}
+    \vspace{0.3cm}
+    {\large \nowdatetime\par}
+    \vspace{3cm}
+  \end{center}
+    \thispagestyle{empty}
+ 
+}
+
+
+\begin{document}
+\begin{center}
+  \centering
+  \vspace*{2cm}
+  
+  {\Large\textbf{DATA420-25S1(C)}\par}
+  
+  \vspace{0.5cm}
+  {\large\textbf{ASSIGNMENT 1}\par}
+  
+  \vspace{4cm}
+  {\Huge\textbf{GHCN Data Analysis using Spark}\par}
+  
+  \vfill
+  {\large David Ewing (82171165)\par}
+  
+  \vspace{0.3cm}
+  {\large \nowdatetime\par}
+  
+  \vspace{3cm}
+\end{center}
+
+\thispagestyle{empty}
+\newpage
+
+\fontspec{Consolas}
+Hello ├── test
+
+\section*{Structure of an Azure Blob Storage URL}
+\sloppy
+%\noindent\texttt{
+  \url{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2024.csv.gz}
+\bigskip
+
+\noindent
+\begin{tabular}{@{}L{0.32\textwidth} L{0.12\textwidth} L{0.44\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\texttt{wasbs://} & Protocol & Azure Blob Storage over SSL (used with Hadoop-compatible connectors) \\
+&   &  \\
+\texttt{campus-data} & Container & Like a top-level directory within the blob storage account \\
+&   &  \\
+\texttt{madsstorage002} & Storage account  & The Azure storage account name \\
+&   &  \\
+\texttt{blob.core.windows.net} & Service domain & Azure’s blob service endpoint domain \\
+&   &  \\
+\texttt{/ghcnd/daily/2024.csv.gz} & Path & Virtual directory and file structure within the container \\
+&   &  \\
+\texttt{ghcnd} & Container name & \texttt{<container>} \\
+&   &  \\
+\texttt{daily} & Optional folder(s) within container & \texttt{<directory>}\\
+&   &  \\
+\texttt{2024.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+\section*{Directory Structure of \texttt{ghcnd/}}
+
+The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+
+\bigskip
+\noindent The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+\texttt{%
+\\
+ghcnd\\
+├── daily\\
+│   ├── 1750.csv.gz\\
+│   ├── 1751.csv.gz\\
+│   ├── \ldots\\
+│   ├── 2024.csv.gz\\
+│   └── 2025.csv.gz\\
+├── countries.txt\\
+├── inventory.txt\\
+├── states.txt\\
+└── stations.txt
+}
+
+\end{document}

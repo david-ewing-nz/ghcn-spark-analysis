@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmonofont{Consolas}
+
+\begin{document}
+\fontspec{Consolas}
+Hello ├── test
+\section*{Directory Structure of \texttt{daily/}}
+
+The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+
+\bigskip
+\noindent The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+\texttt{%
+\\
+ghcnd\\
+├── daily\\
+│   ├── 1750.csv.gz\\
+│   ├── 1751.csv.gz\\
+│   ├── \ldots\\
+│   ├── 2024.csv.gz\\
+│   └── 2025.csv.gz\\
+├── countries.txt\\
+├── inventory.txt\\
+├── states.txt\\
+└── stations.txt
+}
+
+\end{document}
