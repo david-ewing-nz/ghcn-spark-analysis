@@ -1,49 +1,58 @@
-\documentclass[a4paper,11pt]{article}
-
-% Packages
-\usepackage[utf8]{inputenc}
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
 \usepackage{graphicx}
-\usepackage{amsmath, amssymb}
-\usepackage{geometry}
-\usepackage{natbib}
 \usepackage{hyperref}
-\usepackage{float}
-\usepackage{fancyhdr} 
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{datetime2}
 
-% Layout
-\geometry{a4paper, total={170mm,257mm}, left=25mm, right=25mm, top=15mm, bottom=15mm}
+
 \pagestyle{fancy}
-\fancyhead[L]{DATA420 Report}
-\fancyhead[R]{\today}
-\fancyfoot[C]{\thepage}
+\fancyhf{}
+\rhead{DATA420-25S1 Assignment 1}
+\lhead{GHCN Data Analysis in Spark}
+\cfoot{\thepage}
 
-% Title
-\title{Exploratory Analysis of GHCN Data with Spark}
-\author{David Ewing (82171165) }
-\date{\today}
+\title{GHCN Data Analysis in Spark}
+\author{David Ewing (82171165)}
+\date{\DTMnow}
 
 \begin{document}
 
 \maketitle
 
-\begin{abstract}
-This report documents the analysis of GHCN climate data using Apache Spark in a Kubernetes-based cloud environment.
-\end{abstract}
+\tableofcontents
 
-\section{Introduction}
-Write your introduction here.
+\newpage
 
-\section{Methods}
-Describe your data processing and analysis steps.
+\section{Background}
 
-\section{Results}
-Summarise your key findings.
+In this paragraph you should give a brief overview of what you are doing in the assignment including any useful links or references to background material and a high level description of any difficulties that you had.
 
-\section{Discussion}
-Reflect on what the results mean, potential limitations, and next steps.
+\section{Processing}
 
-\bibliographystyle{apalike}
-\bibliography{references}
+In this paragraph you should describe the structure and content of the data and provide references for discussion in the sections below. You should describe the steps that you took to load, join, and check the data and discuss anything that you discovered along the way, but you should not include outputs other than answers to the questions that you have been asked.
+
+\section{Analysis}
+
+In this paragraph you should answer the questions that you have been asked, give a high level summary of what you have done, and discuss any insights that you had. You should not list answers you have not explained. You should talk about any tasks that you were unable to complete and explain why.
+
+\section{Visualizations}
+
+In this paragraph you should answer the questions, present your visualizations, give a high level summary of what you have done, and discuss any insights that you had. You should talk about any visualizations that you were unable to generate and why.
+
+\section{Conclusions}
+
+In this paragraph you should give a brief overview of what you have achieved and what you have learned.
+
+\section{References}
+
+\begin{itemize}
+    \item Include all references that you have used or cited in the report. Use a consistent citation style such as APA or MLA.
+    \item Include links to any online resources, datasets, libraries, or documentation.
+    \item Clearly indicate any use of generative AI tools such as ChatGPT or Grammarly.
+\end{itemize}
 
 \end{document}
-

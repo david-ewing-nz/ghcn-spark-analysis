@@ -1,0 +1,136 @@
+
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{datetime2}
+\usepackage{float}
+\usepackage{appendix}
+\usepackage{indentfirst}
+
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+
+\newcommand{\custommaketitle}{
+    \begin{center}
+        \vspace*{3cm}
+        
+        {\Large\textsf{\textbf{DATA420-24S2(C)}}}\\
+        \vspace{0.3cm} 
+        {\large\textsf{\textbf{Assignment 1}}}\\
+        \vspace{5cm}
+        {\Large\textsf{\textbf{GHCN Data Analysis using Spark}}}\\
+        \vspace{8cm}
+        {\large David Ewing (82171165)\par}
+        \vspace{0.3cm}
+        \DTMsetdatestyle{yyyyMMdd}
+        {\large\textsf{ \DTMnow}}\\
+        
+        \vspace{3cm}
+    \end{center}
+    \thispagestyle{empty}
+}
+
+\begin{document
+
+
+\renewcommand{\familydefault}{\sfdefault}
+\custommaketitle
+
+\renewcommand{\familydefault}{\sfdefault}
+\newpage 
+
+\setmonofont{Consolas}
+\begin{verbatim}
+Hello ├── test
+\end{verbatim}
+\setmonofont{Courier New}
+
+
+
+\section*{Structure of an Azure Blob Storage URL}
+\sloppy
+\noindent\texttt{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2024.csv.gz}
+\bigskip
+
+\noindent
+\begin{tabular}{@{}L{0.35\textwidth} L{0.12\textwidth} L{0.50\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\texttt{wasbs://} & Protocol & Azure Blob Storage over SSL (used with Hadoop-compatible connectors) \\
+\texttt{campus-data} & Container & Like a top-level directory within the blob storage account \\
+\texttt{madsstorage002} & Storage account & The Azure storage account name \\
+\texttt{blob.core.windows.net} & Service domain & Azure’s blob service endpoint domain \\
+\texttt{/ghcnd/daily/2024.csv.gz} & Path & Virtual directory and file structure within the container \\
+\texttt{ghcnd} & Container name & \texttt{<container>} \\
+\texttt{daily} & Optional folder(s) within container & \texttt{<directory>}\\
+\texttt{2024.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+
+\section*{Directory Structure of \texttt{ghcnd/}}
+
+The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+
+\bigskip
+\noindent The \texttt{daily/} folder contains yearly data files in compressed CSV format:
+\texttt{%
+\\
+ghcnd\\
+├── daily\\
+│   ├── 1750.csv.gz\\
+│   ├── 1751.csv.gz\\
+│   ├── \ldots\\
+│   ├── 2024.csv.gz\\
+│   └── 2025.csv.gz\\
+├── countries.txt\\
+├── inventory.txt\\
+├── states.txt\\
+└── stations.txt
+}
+
+
+\section{Background}
+
+In this paragraph you should give a brief overview of what you are doing in the assignment including any useful links or references to background material and a high level description of any difficulties that you had.
+
+\section{Processing}
+
+In this paragraph you should describe the structure and content of the data and provide references for discussion in the sections below. You should describe the steps that you took to load, join, and check the data and discuss anything that you discovered along the way, but you should not include outputs other than answers to the questions that you have been asked.
+
+\section{Analysis}
+
+In this paragraph you should answer the questions that you have been asked, give a high level summary of what you have done, and discuss any insights that you had. You should not list answers you have not explained. You should talk about any tasks that you were unable to complete and explain why.
+
+\section{Visualizations}
+
+In this paragraph you should answer the questions, present your visualizations, give a high level summary of what you have done, and discuss any insights that you had. You should talk about any visualizations that you were unable to generate and why.
+
+\section{Conclusions}
+
+In this paragraph you should give a brief overview of what you have achieved and what you have learned.
+
+\section{References}
+
+\begin{itemize}
+    \item Include all references that you have used or cited in the report. Use a consistent citation style such as APA or MLA.
+    \item Include links to any online resources, datasets, libraries, or documentation.
+    \item Clearly indicate any use of generative AI tools such as ChatGPT or Grammarly.
+\end{itemize}
+
+
+
+\end{document}
