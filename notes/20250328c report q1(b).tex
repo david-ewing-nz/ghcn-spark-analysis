@@ -17,12 +17,13 @@
 \usepackage{placeins}
 \usepackage{appendix}
 \usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{ghcnd.bib}
 \setmainfont{Arial} % Or another sans-serif font you’re using
 \linespread{1.0}
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0pt}
-
+\setmonofont{Consolas}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
@@ -55,32 +56,60 @@
 \renewcommand{\familydefault}{\sfdefault}
 \newpage 
 
-\setmonofont{Consolas}
-\begin{verbatim}
-Hello ├── test
-\end{verbatim}
-\setmonofont{Courier New}
-\cite{testentry}
 
-\section{Analysis of the GHCN-Daily Dataset} 
-\subsection{Q1(a), Data Structure }
-\FloatBarrier
-The dataset is stored in an Azure Blob Storage container named \texttt{ghcnd}, structured using virtual directories. As shown in Figure~\ref{fig-azure-url}, each file path follows the format:
+
+\section{Background}
+
+The Global Historical Climatology Network Daily (GHCND) dataset~\cite{ncei2024} is a rich source of daily weather observations extending from the 1700s to the present. It includes:
+
+\begin{itemize}
+    \item Temperature
+    \item Precipitation
+    \item Wind speed
+\end{itemize}
+
+The dataset aggregates records from thousands of weather stations across a wide variety of climate zones. Its broad spatiotemporal coverage enables:
+
+\begin{itemize}
+    \item Analysis of changes in weather patterns over time and across regions
+    \item Identification of long-term climate trends and regional variability
+\end{itemize}
+
+Insights gained from GHCND data are essential for:
+
+\begin{itemize}
+    \item Climate modelling
+    \item Impact assessments
+    \item Developing adaptation and mitigation strategies
+\end{itemize}\section{Processing}
+
+\section{Processing} 
+
+
+By using Hadoop HDFS commands to explore how the GHCND dataset organised, we see that the dataset is stored in an Azure Blob Storage container named \texttt{ghcnd}. An example of the form of the general Azure Blob Storage WASBS URI structure of the path to the file is:
 
 \begin{center}
     \url{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2025.csv.gz}
     \end{center}
 
-    Within the \texttt{ghcnd} container: :
+    This UDI's components are broken out in Figure~\ref{fig-azure-url}.  
+    
+    Using Hadoop commands: 
+     \begin{itemize}
+        \item \texttt{hdfs dfs -ls    wasbs://...} the ghcn files and subfolders were found, and with
+        \item \texttt{hdfs dfs -du -h wasbs://...} of the size of the files were found.
+    \end{itemize}
+    \textbf{(a)} The structure is shown in Figure~\ref{fig-ghcnd-tree}, showing a tree-like directory structure with yearly files nested under \texttt{daily}.\\
+    \textbf{(b)}As a summary  the \texttt{ghcnd} container: 
     \begin{itemize}
-        \item Metadata files in the root are  \texttt{stations.txt}, \texttt{states.txt}, \texttt{countries.txt}, and\\ \texttt{inventory.txt},
+        \item The metadata files in the root are \texttt{stations.txt}, \texttt{states.txt}, \texttt{countries.txt}, and\\ \texttt{inventory.txt},
         \item The main subdirectory is \texttt{daily} which holds 264 compressed \texttt{.csv.gz} file, 
         \item Each compressed files  holds the daily records for one year, 
-        \item The records span 1750 to 2025 with 12 years data missing. 
+        \item The records span the years 1750 to 2025 with 12 years of data missing. 
     \end{itemize}
-    The layout is illustrated in Figure~\ref{fig-ghcnd-tree}, showing a tree-like directory structure with yearly files nested under \texttt{daily}.
+    
 
-\bigskip
+
 
 \begin{figure}[H]
     \centering
@@ -105,8 +134,7 @@ ghcnd\\
 \caption{Directory Structure of the GHCND Azure Blob Storage}
 \label{fig-ghcnd-tree}
 \end{figure}
-\begin{figure}[htbp]
-   url{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2025.csv.gz}\par
+\begin{figure}[htbp] 
     \centering
     \begin{minipage}{0.7\textwidth}
     \centering
@@ -119,10 +147,10 @@ ghcnd\\
 \texttt{campus-data} & Container & Top-level shared folder\vspace{0.5\baselineskip} \\
 \texttt{madsstorage002} & Storage account\vspace{0.5\baselineskip} & Network or disk volume name \\
 \texttt{blob.core.windows.net} & Service domain\vspace{0.5\baselineskip} & Blob service endpoint  \\
-\texttt{/ghcnd/daily/2024.csv.gz} & Path & Blob path\vspace{0.5\baselineskip} \\
+\texttt{/ghcnd/daily/2025.csv.gz} & Path & Blob path\vspace{0.5\baselineskip} \\
 \texttt{ghcnd} & Container name\vspace{0.5\baselineskip} & \texttt{<container>} \\
 \texttt{daily} & Optional folder(s) within container\vspace{0.5\baselineskip} & \texttt{<directory>}\\
-\texttt{2024.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
+\texttt{2025.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
 \bottomrule
 \end{tabular}
 \caption{`URI structure of the GHCND Azure Blob Storage}
@@ -131,45 +159,30 @@ ghcnd\\
 \end{figure}
 \bigskip
 
-
+\newpage
+\textbf{(c)}The size of the data increases substantially over time. Early files (e.g., 1750–1800) are very small due to sparse station coverage, while more recent years (especially post-1950) show much larger files, reflecting global expansion in station coverage and richer datasets. This trend illustrates the historical growth in observational infrastructure and data collection efforts.
 
 \begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.7\textwidth}
+    \begin{minipage}{0.9\textwidth}
     \centering
-    \begin{tabular}{@{}L{0.50\textwidth} R{0.25\textwidth} R{0.25\textwidth}@{}}
+    \begin{tabular}{@{}L{0.40\textwidth} R{0.20\textwidth} R{0.20\textwidth} R{0.20\textwidth}@{}}
         \toprule
-        \textbf{Path} & \textbf{Filesize (bytes)} & \textbf{Filesize (bytes)} \\
+        \textbf{Path} & \textbf{Filesize (bytes)} & \textbf{Diskspace (bytes)} & \textbf{Diskspace \%} \\
         \midrule
-        \texttt{/ghcnd/daily/*.csv.gz}      & 106788383840 & 0\par \\
-        \texttt{/ghcnd/ghcnd-countries.txt} &         3659 & 0\par \\
-        \texttt{/ghcnd/ghcnd-inventory.txt} &     35218290 & 0\par \\
-        \texttt{/ghcnd/ghcnd-states.txt}    &         1086 & 0\par \\
-        \texttt{/ghcnd/ghcnd-stations.txt}  &     11150502 & 0\par \\
+        \texttt{/ghcnd/daily/*.csv.gz}      & \texttt{13.0 G}  & \texttt{13.0 G}  & \texttt{99.66} \\
+        \texttt{/ghcnd/ghcnd-countries.txt} & \texttt{3.6 K}   & \texttt{3.6 K}   & \texttt{0.000028} \\
+        \texttt{/ghcnd/ghcnd-inventory.txt} & \texttt{33.6 M}  & \texttt{33.6 M}  & \texttt{0.258} \\
+        \texttt{/ghcnd/ghcnd-states.txt}    & \texttt{1.1 K}   & \texttt{1.1 K}   & \texttt{0.000008} \\
+        \texttt{/ghcnd/ghcnd-stations.txt}  & \texttt{10.6 M}  & \texttt{10.6 M}  & \texttt{0.0812} \\
+        \midrule
+        \textbf{Total} & \texttt{13.1 G} & \texttt{13.1 G} & \texttt{100} \\
         \bottomrule
-        \end{tabular}
-\caption{Filesizes of the GHCND Azure Blob Storage}
-\label{fig-azure-url}
-\end{minipage}
+    \end{tabular}
+    \caption{Filesizes of the GHCND Azure Blob Storage}
+    \label{fig-azure-size}
+    \end{minipage}
 \end{figure}
-The size of the data increases substantially over time. Early files (e.g., 1750–1800) are very small due to sparse station coverage, while more recent years (especially post-1950) show much larger files, reflecting global expansion in station coverage and richer datasets. This trend illustrates the historical growth in observational infrastructure and data collection efforts.
-
-
-\section*{Directory Structure of \texttt{ghcnd/}}
-
-The \texttt{daily/} folder contains yearly data files in compressed CSV format:
-
-\bigskip
-\noindent The \texttt{daily/} folder contains yearly data files in compressed CSV format:
-
-
-\section{Background}
-
-In this paragraph you should give a brief overview of what you are doing in the assignment including any useful links or references to background material and a high level description of any difficulties that you had.
-
-\section{Processing}
-
-In this paragraph you should describe the structure and content of the data and provide references for discussion in the sections below. You should describe the steps that you took to load, join, and check the data and discuss anything that you discovered along the way, but you should not include outputs other than answers to the questions that you have been asked.
 
 \section{Analysis}
 
