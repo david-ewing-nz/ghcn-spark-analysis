@@ -1,0 +1,225 @@
+
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{fontspec}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{datetime2}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{appendix}
+\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{ghcnd.bib}
+\setmainfont{Arial} % Or another sans-serif font you’re using
+\linespread{1.0}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\setmonofont{Consolas}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\newcommand{\customtitle}{
+    \begin{center}
+        \vspace*{3cm}
+        
+        {\Large\textsf{\textbf{DATA420-25S2(C)}}}\\
+        \vspace{0.3cm} 
+        {\large\textsf{\textbf{Assignment 1}}}\\
+        \vspace{5cm}
+        {\Large\textsf{\textbf{GHCN Data Analysis using Spark}}}\\
+        \vfill
+        {\large David Ewing (82171165)\par}
+        \vspace{0.3cm}
+       % \DTMsetdatestyle{yyyymmdd}
+        \DTMsetdatestyle{iso}
+        {\large\textsf{ \DTMnow}}\\
+        
+        \vspace{3cm}
+    \end{center}
+    \thispagestyle{empty}
+}
+
+\begin{document}
+
+
+\renewcommand{\familydefault}{\sfdefault}
+\customtitle
+\renewcommand{\familydefault}{\sfdefault}
+\newpage 
+
+
+
+\section{Background}
+
+The Global Historical Climatology Network Daily (GHCND) dataset~\cite{ncei2024} is a rich source of daily weather observations extending from the 1700s to the present. It includes:
+
+\begin{itemize}
+    \item Temperature
+    \item Precipitation
+    \item Wind speed
+\end{itemize}
+
+The dataset aggregates records from thousands of weather stations across a wide variety of climate zones. Its broad spatiotemporal coverage enables:
+
+\begin{itemize}
+    \item Analysis of changes in weather patterns over time and across regions
+    \item Identification of long-term climate trends and regional variability
+\end{itemize}
+
+Insights gained from GHCND data are essential for:
+
+\begin{itemize}
+    \item Climate modelling
+    \item Impact assessments
+    \item Developing adaptation and mitigation strategies
+\end{itemize}\section{Processing}
+
+\section{Processing} 
+
+
+By using Hadoop HDFS commands to explore how the GHCND dataset organised, we see that the dataset is stored in an Azure Blob Storage container named \texttt{ghcnd}. An example of the form of the general Azure Blob Storage WASBS URI structure of the path to the file is:
+
+\begin{center}
+    \url{wasbs://campus-data@madsstorage002.blob.core.windows.net/ghcnd/daily/2025.csv.gz}
+    \end{center}
+
+    This UDI's components are broken out in Figure~\ref{fig-azure-url}.  
+    
+    Using Hadoop commands: 
+     \begin{itemize}
+        \item \texttt{hdfs dfs -ls    wasbs://...} the ghcn files and subfolders were found, and with
+        \item \texttt{hdfs dfs -du -h wasbs://...} of the size of the files were found.
+    \end{itemize}
+    \textbf{(a)} The structure is shown in Figure~\ref{fig-ghcnd-tree}, showing a tree-like directory structure with yearly files nested under \texttt{daily}.\\
+    \textbf{(b)}As a summary  the \texttt{ghcnd} container: 
+    \begin{itemize}
+        \item The metadata files in the root are \texttt{stations.txt}, \texttt{states.txt}, \texttt{countries.txt}, and\\ \texttt{inventory.txt},
+        \item The main subdirectory is \texttt{daily} which holds 264 compressed \texttt{.csv.gz} file, 
+        \item Each compressed files  holds the daily records for one year, 
+        \item The records span the years 1750 to 2025 with 12 years of data missing. 
+    \end{itemize}
+    
+
+
+
+\begin{figure}[H]
+    \centering
+    \fbox{%
+      \begin{minipage}{0.4\textwidth}
+\texttt{%
+\\
+ghcnd\\
+├── daily\\
+│   ├── 1750.csv.gz\\
+│   ├── 1751.csv.gz\\
+│   ├── \ldots\\
+│   ├── 2024.csv.gz\\
+│   └── 2025.csv.gz\\
+├── countries.txt\\
+├── inventory.txt\\
+├── states.txt\\
+└── stations.txt
+}
+\end{minipage}
+}
+\caption{Directory Structure of the GHCND Azure Blob Storage}
+\label{fig-ghcnd-tree}
+\end{figure}
+\begin{figure}[htbp] 
+    \centering
+    \begin{minipage}{0.7\textwidth}
+    \centering
+    
+\begin{tabular}{@{}L{0.50\textwidth} L{0.20\textwidth} L{0.40\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Type} & \textbf{Description} \\
+\midrule
+\texttt{wasbs://} & Protocol & Like \texttt{file://} or \texttt{https://}\vspace{0.5\baselineskip} \\
+\texttt{campus-data} & Container & Top-level shared folder\vspace{0.5\baselineskip} \\
+\texttt{madsstorage002} & Storage account\vspace{0.5\baselineskip} & Network or disk volume name \\
+\texttt{blob.core.windows.net} & Service domain\vspace{0.5\baselineskip} & Blob service endpoint  \\
+\texttt{/ghcnd/daily/2025.csv.gz} & Path & Blob path\vspace{0.5\baselineskip} \\
+\texttt{ghcnd} & Container name\vspace{0.5\baselineskip} & \texttt{<container>} \\
+\texttt{daily} & Optional folder(s) within container\vspace{0.5\baselineskip} & \texttt{<directory>}\\
+\texttt{2025.csv.gz} & Blob name (file) &  \texttt{<filename>} \\
+\bottomrule
+\end{tabular}
+\caption{`URI structure of the GHCND Azure Blob Storage}
+\label{fig-azure-url}
+\end{minipage}
+\end{figure}
+\bigskip
+
+\newpage
+\textbf{(c)}The size of the data increases substantially over time. Early files (e.g., 1750–1800) are very small due to sparse station coverage, while more recent years (especially post-1950) show much larger files, reflecting global expansion in station coverage and richer datasets. This trend illustrates the historical growth in observational infrastructure and data collection efforts.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.9\textwidth}
+    \centering
+    \begin{tabular}{@{}L{0.40\textwidth} R{0.20\textwidth} R{0.20\textwidth} R{0.20\textwidth}@{}}
+        \toprule
+        \textbf{Path} & \textbf{Filesize (bytes)} & \textbf{Diskspace (bytes)} & \textbf{Diskspace \%} \\
+        \midrule
+        \texttt{/ghcnd/daily/*.csv.gz}      & \texttt{13.0 G}  & \texttt{13.0 G}  & \texttt{99.66} \\
+        \texttt{/ghcnd/ghcnd-countries.txt} & \texttt{3.6 K}   & \texttt{3.6 K}   & \texttt{0.000028} \\
+        \texttt{/ghcnd/ghcnd-inventory.txt} & \texttt{33.6 M}  & \texttt{33.6 M}  & \texttt{0.258} \\
+        \texttt{/ghcnd/ghcnd-states.txt}    & \texttt{1.1 K}   & \texttt{1.1 K}   & \texttt{0.000008} \\
+        \texttt{/ghcnd/ghcnd-stations.txt}  & \texttt{10.6 M}  & \texttt{10.6 M}  & \texttt{0.0812} \\
+        \midrule
+        \textbf{Total} & \texttt{13.1 G} & \texttt{13.1 G} & \texttt{100} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Filesizes of the GHCND Azure Blob Storage}
+    \label{fig-azure-size}
+    \end{minipage}
+\end{figure}
+
+\section{Analysis}
+
+In this paragraph you should answer the questions that you have been asked, give a high level summary of what you have done, and discuss any insights that you had. You should not list answers you have not explained. You should talk about any tasks that you were unable to complete and explain why.
+
+\section{Visualizations}
+
+In this paragraph you should answer the questions, present your visualizations, give a high level summary of what you have done, and discuss any insights that you had. You should talk about any visualizations that you were unable to generate and why.
+
+\section{Conclusions}
+
+In this paragraph you should give a brief overview of what you have achieved and what you have learned.
+
+\section{References}
+
+\begin{itemize}
+    \item Include all references that you have used or cited in the report. Use a consistent citation style such as APA or MLA.
+    \item Include links to any online resources, datasets, libraries, or documentation.
+    \item Clearly indicate any use of generative AI tools such as ChatGPT or Grammarly.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+\printbibliography
+
+\newpage
+
+\begin{appendices}
+
+\end{appendices}
+
+\end{document}
