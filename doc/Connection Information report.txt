@@ -1,0 +1,70 @@
+Timestamp (UTC): 2025-03-29T17:11:29.046Z
+Activity ID: 0d3bbcda-bf25-4882-9c28-c42613460000
+Transport protocol: TCP
+Round-trip time: 47
+Available bandwidth: 3.825
+Frame rate: 0
+Gateway name: afdfp-rdgateway-r1.wvd.microsoft.com:443
+Gateway logon method: Azure Active Directory
+Remote computer: 
+
+Activity Id:
+0d3bbcda-bf25-4882-9c28-c42613460000
+
+Session Id:
+137c66d7-d399-4859-9a10-fc7b4f67d121
+
+Flight settings:
+Nh_Nick_M1: false
+Nh_Nick_M2: false
+Nh_Mobius_AVD: true
+Nh_FLU: true
+Nh_Feedback: true
+Nh_Feedback_Prod: true
+Nh_Feedback_V2: true
+Nh_Location_Redirection: true
+Nh_SpecialKey_Redirection: true
+Nh_Camera_Redirection: true
+Nh_Disable_Menu_Items: false
+Nh_Use_Avd_Client_Options: true
+Nh_Use_Mobius_Entra_App_ID: true
+Nh_Use_EndUserApi_GetCpc: true
+Nh_Use_Entra_B2B_TenantId: false
+Nh_Skip_3p_Cookie_Request: false
+Ufp_Use_New_Fpa: false
+Nh_New_Error_Handler: true
+Nh_Remote_App_Launcher: false
+Nh_Use_Browser_Dialog_Print: true
+Nh_New_Mobius_Branding: true
+Nh_Use_MDCA_ReplyTo_State: true
+Nh_Disable_WebCodecs_Firefox: true
+
+User Settings:
+theme: Light
+showLocalResourcesUI: true
+allowPrinter: true
+allowMicrophone: false
+allowClipboard: true
+allowLocation: true
+allowCamera: false
+allowFileTransfer: true
+printer: true
+microphone: false
+clipboard: true
+location: true
+camera: false
+fileTransfer: true
+redirectionsActive:
+	printer: true
+	microphone: false
+	clipboard: true
+	location: true
+	camera: false
+	fileTransfer: true
+ime: false
+selectedKeyboard: None
+highDpi: false
+downloadConsentStatus: false
+showFlwReminder: true
+avcWebCodecDecodingEnabled: true
+specialKeys: true
