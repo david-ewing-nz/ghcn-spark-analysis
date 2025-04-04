@@ -23,6 +23,7 @@ __pycache__/
 *.pyc
 *.pkl
 *.egg
+.gitignore
 *.egg-info/
 dist/
 build/
@@ -30,7 +31,6 @@ build/
 .venv/
 venv/
 env/
-
 # ---------------------------
 # Jupyter Notebooks
 # ---------------------------
@@ -39,7 +39,7 @@ env/
 output.txt
 *.out
 *.log
-
+Notebook/
 # ---------------------------
 # VS Code Settings
 # ---------------------------
